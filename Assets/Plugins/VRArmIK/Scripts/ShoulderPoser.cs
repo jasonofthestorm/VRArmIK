@@ -4,6 +4,7 @@ namespace VRArmIK
 {
 	public class ShoulderPoser : MonoBehaviour
 	{
+        public GameObject eye;
 		public ShoulderTransforms shoulder;
 		public VRTrackingReferences vrTrackingReferences;
 		public AvatarVRTrackingReferences avatarTrackingReferences;
@@ -74,12 +75,13 @@ namespace VRArmIK
 
 		protected virtual void Update()
 		{
-			shoulder.transform.rotation = Quaternion.identity;
+            shoulder.transform.rotation = shoulder.transform.parent.rotation;
 			positionShoulder();
-			rotateShoulderUp();
-			rotateShoulderRight();
+            rotateShoulderUp();
+            shoulder.transform.localEulerAngles = new Vector3(0f, shoulder.transform.localEulerAngles.y, 0f);
+            //rotateShoulderRight();
 
-			if (enableDistinctShoulderRotation)
+            if (enableDistinctShoulderRotation)
 			{
 				rotateLeftShoulder();
 				rotateRightShoulder();
@@ -164,8 +166,10 @@ namespace VRArmIK
 				clampHeadRotationDeltaUp(ref targetRotation);
 			}
 
-			shoulder.transform.eulerAngles = targetRotation;
-		}
+            Debug.Log("targrot = " + angle);
+
+            shoulder.transform.localEulerAngles = new Vector3(0f, targetRotation.y, 0f);
+        }
 
 		protected virtual void rotateShoulderRight()
 		{
@@ -199,8 +203,8 @@ namespace VRArmIK
 		{
 			Transform leftHand = avatarTrackingReferences.leftHand.transform, rightHand = avatarTrackingReferences.rightHand.transform;
 
-			Vector3 distanceLeftHand = leftHand.position - shoulder.transform.position,
-				distanceRightHand = rightHand.position - shoulder.transform.position;
+			Vector3 distanceLeftHand = leftHand.localPosition - shoulder.transform.localPosition,
+				distanceRightHand = rightHand.localPosition - shoulder.transform.localPosition;
 
 			if (ignoreYPos)
 			{
@@ -208,8 +212,8 @@ namespace VRArmIK
 				distanceRightHand.y = 0;
 			}
 
-			Vector3 directionLeftHand = distanceLeftHand.normalized,
-				directionRightHand = distanceRightHand.normalized;
+            Vector3 directionLeftHand = distanceLeftHand.normalized,
+                directionRightHand = distanceRightHand.normalized;
 
 			Vector3 combinedDirection = directionLeftHand + directionRightHand;
 
@@ -234,7 +238,7 @@ namespace VRArmIK
 
 		void clampHeadRotationDeltaUp(ref Vector3 targetRotation)
 		{
-			float headUpRotation = (avatarTrackingReferences.head.transform.eulerAngles.y + 360f) % 360f;
+			float headUpRotation = (avatarTrackingReferences.head.transform.localEulerAngles.y + 360f) % 360f;
 			float targetUpRotation = (targetRotation.y + 360f) % 360f;
 
 			float delta = headUpRotation - targetUpRotation;
