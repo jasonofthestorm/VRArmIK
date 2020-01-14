@@ -171,6 +171,7 @@ namespace VRArmIK
             shoulder.transform.localEulerAngles = new Vector3(0f, targetRotation.y, 0f);
         }
 
+
 		protected virtual void rotateShoulderRight()
 		{
 			float heightDiff = vrTrackingReferences.hmd.transform.position.y - PoseManager.Instance.vrSystemOffsetHeight;
