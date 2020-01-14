@@ -19,7 +19,7 @@ This fork has been modified to pose the shoulders based on the Avatar's local ro
   * prevents unrealistic hand rotations
 
 # How To Use
-1. Download package from [Unity Asset Store](http://u3d.as/1d07)
+1. Download this repo
 2. Add PoseManager and Avatar Prefab into your scene
 3. Run
 
