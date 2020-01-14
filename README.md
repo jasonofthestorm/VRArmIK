@@ -2,7 +2,7 @@
 VRArmIK brings arms into VR without any additional tracking devices. 
 Using head and hand positions, the shoulders and arms are estimated to create realistic arm movements.
 
-# This fork has been modified to pose the shoulders based on the Avatar's local rotation, which can be useful in games like flight simulators where a player might be doing flips and rolls.
+This fork has been modified to pose the shoulders based on the Avatar's local rotation, which can be useful in games like flight simulators where a player might be doing flips and rolls.
 
 [See the Video on Youtube](https://youtu.be/dHgH6Xsi3JQ)
 
